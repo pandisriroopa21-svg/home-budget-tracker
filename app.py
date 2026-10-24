@@ -148,8 +148,37 @@ def home():
                 .to_dict("records")
             )
 
-    categories = get_categories()
+    # Monthly Budget Analysis
+    today = date.today()
+    con = get_connection()
+    cursor = con.cursor(dictionary=True)
 
+    try:
+        cursor.execute("""
+            SELECT c.category_name,
+                   mb.budget_amount,
+                   COALESCE(SUM(t.amount), 0) AS actual_expense
+            FROM monthly_budgets mb
+            JOIN categories c
+                ON mb.category_id = c.category_id
+            LEFT JOIN transactions t
+                ON t.category_id = mb.category_id
+                AND t.transaction_type = 'Expense'
+                AND MONTH(t.transaction_date) = mb.budget_month
+                AND YEAR(t.transaction_date) = mb.budget_year
+            WHERE mb.budget_month = %s
+              AND mb.budget_year = %s
+            GROUP BY c.category_name, mb.budget_amount
+            ORDER BY c.category_name
+        """, (today.month, today.year))
+
+        budget_totals = cursor.fetchall()
+
+    finally:
+        cursor.close()
+        con.close()
+
+    categories = get_categories()
     return render_template_string("""
     <!DOCTYPE html>
     <html>
@@ -294,8 +323,39 @@ def home():
             {% endif %}
         </div>
 
-        <div class="panel">
-            <h2>Expense Distribution Pie Chart</h2>
+        <<div class="panel">
+    <h2>Monthly Budget Analysis</h2>
+    {% if budget_totals %}
+    <div class="table-box">
+        <table>
+            <tr>
+                <th>Category</th>
+                <th>Budget (₹)</th>
+                <th>Actual Expense (₹)</th>
+                <th>Remaining (₹)</th>
+                <th>Status</th>
+            </tr>
+            {% for item in budget_totals %}
+            <tr>
+                <td>{{ item.category_name }}</td>
+                <td>{{ "%.2f"|format(item.budget_amount|float) }}</td>
+                <td>{{ "%.2f"|format(item.actual_expense|float) }}</td>
+                <td>{{ "%.2f"|format((item.budget_amount|float) - (item.actual_expense|float)) }}</td>
+                <td>
+                    {% if item.actual_expense|float > item.budget_amount|float %}
+                        Over Budget
+                    {% else %}
+                        Within Budget
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    {% else %}
+    <p>No monthly budgets found for this month.</p>
+    {% endif %}
+</div>
             <img src="/expense-chart" alt="Expense pie chart"
                  style="max-width:100%;width:500px">
         </div>
@@ -323,8 +383,9 @@ def home():
     </body>
     </html>
     """, transactions=transactions, income=income, expenses=expenses,
-         categories=categories, category_totals=category_totals,
-         error=error, today=date.today().isoformat())
+  categories=categories, category_totals=category_totals,
+budget_totals=budget_totals,
+error=error, today=date.today().isoformat())
 
 
 @app.route("/expense-chart")
