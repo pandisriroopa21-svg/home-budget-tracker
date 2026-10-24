@@ -10,7 +10,7 @@ def get_connection():
         host="localhost",
         user="root",
         password=os.environ.get("DB_PASSWORD"),
-        database="home_budget"
+     database="home_budget_db"
     )
 
 @app.route("/")
