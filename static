@@ -1,0 +1,355 @@
+
+/* ===== General Page Design ===== */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: #f3f6fc;
+    color: #1e293b;
+    line-height: 1.6;
+}
+
+.container {
+    width: 92%;
+    max-width: 1250px;
+    margin: 30px auto;
+}
+
+/* ===== Main Heading ===== */
+h1 {
+    text-align: center;
+    color: #173b70;
+    font-size: 36px;
+    margin: 10px 0 4px;
+    letter-spacing: -0.8px;
+}
+
+.container > p {
+    color: #64748b;
+    margin-bottom: 25px;
+}
+
+/* ===== Navigation Bar ===== */
+.navbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    background: #173b70;
+    padding: 12px;
+    border-radius: 14px;
+    margin: 25px 0 30px;
+    box-shadow: 0 5px 16px rgba(23, 59, 112, 0.15);
+}
+
+.navbar a {
+    color: #ffffff;
+    text-decoration: none;
+    padding: 11px 16px;
+    border-radius: 9px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.navbar a:hover {
+    background: #315d98;
+    transform: translateY(-1px);
+}
+
+/* ===== Summary Cards ===== */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+    margin: 30px 0;
+}
+
+.card {
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 16px;
+    border: 1px solid #e4eaf4;
+    box-shadow: 0 5px 18px rgba(30, 41, 59, 0.05);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(30, 41, 59, 0.09);
+}
+
+.card h3 {
+    color: #64748b;
+    font-size: 15px;
+    font-weight: 600;
+    margin: 0 0 12px;
+}
+
+.card h2 {
+    font-size: 29px;
+    margin: 0;
+    overflow-wrap: anywhere;
+}
+
+.income {
+    color: #15966a;
+}
+
+.expense {
+    color: #e05252;
+}
+
+.balance {
+    color: #3478d4;
+}
+
+/* ===== Content Panels ===== */
+.panel {
+    background: #ffffff;
+    padding: 26px;
+    margin: 25px 0;
+    border: 1px solid #e4eaf4;
+    border-radius: 16px;
+    box-shadow: 0 5px 18px rgba(30, 41, 59, 0.04);
+    overflow: hidden;
+}
+
+.panel h2 {
+    color: #173b70;
+    font-size: 21px;
+    margin: 0 0 22px;
+    padding-bottom: 13px;
+    border-bottom: 1px solid #e9eef6;
+}
+
+/* ===== Forms ===== */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.form-grid > div {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 7px;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 12px 14px;
+    font-family: inherit;
+    font-size: 14px;
+    color: #1e293b;
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 9px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: #3478d4;
+    box-shadow: 0 0 0 3px rgba(52, 120, 212, 0.12);
+}
+
+/* ===== Buttons ===== */
+button {
+    display: inline-block;
+    margin-top: 22px;
+    padding: 12px 24px;
+    background: #2563b9;
+    color: #ffffff;
+    border: none;
+    border-radius: 9px;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+}
+
+button:hover {
+    background: #173b70;
+    transform: translateY(-1px);
+}
+
+/* ===== Tables ===== */
+.table-box {
+    width: 100%;
+    overflow-x: auto;
+    border-radius: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #ffffff;
+    font-size: 14px;
+}
+
+th {
+    background: #edf3fc;
+    color: #173b70;
+    text-align: left;
+    font-weight: 700;
+    white-space: nowrap;
+    padding: 15px 14px;
+}
+
+td {
+    padding: 14px;
+    border-bottom: 1px solid #edf0f5;
+    color: #475569;
+}
+
+tbody tr:hover,
+tr:hover td {
+    background: #f7faff;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+/* ===== Budget Status ===== */
+td:last-child {
+    font-weight: 500;
+}
+
+/* ===== Messages ===== */
+.message {
+    background: #e7f8ef;
+    color: #14794d;
+    padding: 13px 16px;
+    border: 1px solid #bcebd1;
+    border-radius: 9px;
+    margin: 18px 0;
+}
+
+.error {
+    background: #fff0f0;
+    color: #b42323;
+    padding: 13px 16px;
+    border: 1px solid #ffd0d0;
+    border-radius: 9px;
+    margin: 18px 0;
+}
+
+/* ===== Expense Chart ===== */
+.panel img {
+    display: block;
+    height: auto;
+    margin: 25px auto 5px;
+    border-radius: 12px;
+}
+
+/* ===== Links ===== */
+a {
+    transition: color 0.2s;
+}
+
+/* ===== Responsive Design: Tablets ===== */
+@media (max-width: 800px) {
+    .container {
+        width: 94%;
+        margin: 20px auto;
+    }
+
+    .cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+    }
+
+    .card:last-child {
+        grid-column: 1 / -1;
+    }
+
+    .card {
+        padding: 20px;
+    }
+
+    .card h2 {
+        font-size: 25px;
+    }
+
+    .panel {
+        padding: 20px;
+    }
+
+    .navbar {
+        gap: 5px;
+    }
+}
+
+/* ===== Responsive Design: Mobile ===== */
+@media (max-width: 520px) {
+    h1 {
+        font-size: 28px;
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    .card:last-child {
+        grid-column: auto;
+    }
+
+    .card h2 {
+        font-size: 26px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .panel {
+        padding: 16px;
+        margin: 18px 0;
+    }
+
+    .panel h2 {
+        font-size: 19px;
+    }
+
+    .navbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .navbar a {
+        text-align: center;
+    }
+
+    table {
+        font-size: 13px;
+    }
+
+    th,
+    td {
+        padding: 10px;
+    }
+
+    button {
+        width: 100%;
+    }
+}
