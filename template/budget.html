@@ -1,0 +1,58 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Monthly Budget | Home Budget Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="container">
+    <h1 class="page-title">Monthly Budget Analysis</h1>
+
+    <nav class="navbar">
+        <a href="{{ url_for('home') }}">Dashboard</a>
+        <a href="{{ url_for('add_transaction') }}">Add Transaction</a>
+        <a href="{{ url_for('analysis') }}">Expense Analysis</a>
+        <a href="{{ url_for('budget') }}">Monthly Budget</a>
+        <a href="{{ url_for('transactions') }}">Transaction History</a>
+    </nav>
+
+    <div class="panel">
+        <h2>Budget vs Actual Expense</h2>
+
+        {% if budget_totals %}
+        <div class="table-box">
+            <table>
+                <tr>
+                    <th>Category</th>
+                    <th>Budget (₹)</th>
+                    <th>Actual Expense (₹)</th>
+                    <th>Remaining (₹)</th>
+                    <th>Status</th>
+                </tr>
+                {% for item in budget_totals %}
+                <tr>
+                    <td>{{ item.category_name }}</td>
+                    <td>{{ "%.2f"|format(item.budget_amount|float) }}</td>
+                    <td>{{ "%.2f"|format(item.actual_expense|float) }}</td>
+                    <td>{{ "%.2f"|format((item.budget_amount|float) - (item.actual_expense|float)) }}</td>
+                    <td>
+                        {% if item.actual_expense|float > item.budget_amount|float %}
+                            Over Budget
+                        {% else %}
+                            Within Budget
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        {% else %}
+        <p>No monthly budgets found for this month.</p>
+        {% endif %}
+    </div>
+</div>
+</body>
+</html>

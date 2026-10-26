@@ -1,0 +1,53 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Expense Analysis | Home Budget Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="container">
+    <h1 class="page-title">Expense Analysis</h1>
+
+    <nav class="navbar">
+        <a href="{{ url_for('home') }}">Dashboard</a>
+        <a href="{{ url_for('add_transaction') }}">Add Transaction</a>
+        <a href="{{ url_for('analysis') }}">Expense Analysis</a>
+        <a href="{{ url_for('budget') }}">Monthly Budget</a>
+        <a href="{{ url_for('transactions') }}">Transaction History</a>
+    </nav>
+
+    <div class="panel">
+        <h2>Category-wise Expense Analysis</h2>
+
+        {% if category_totals %}
+        <div class="table-box">
+            <table>
+                <tr>
+                    <th>Category</th>
+                    <th>Total Expense (₹)</th>
+                </tr>
+                {% for item in category_totals %}
+                <tr>
+                    <td>{{ item.category_name }}</td>
+                    <td>{{ "%.2f"|format(item.amount|float) }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        {% else %}
+        <p>No expenses recorded yet.</p>
+        {% endif %}
+    </div>
+
+    <div class="panel">
+        <h2>Expense Pie Chart</h2>
+        <img src="{{ url_for('expense_chart') }}"
+             alt="Expense pie chart"
+             style="max-width:100%;width:500px">
+    </div>
+</div>
+</body>
+</html>
