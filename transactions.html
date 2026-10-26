@@ -1,0 +1,54 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Transaction History | Home Budget Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="container">
+    <h1 class="page-title">Transaction History</h1>
+
+    <nav class="navbar">
+        <a href="{{ url_for('home') }}">Dashboard</a>
+        <a href="{{ url_for('add_transaction') }}">Add Transaction</a>
+        <a href="{{ url_for('analysis') }}">Expense Analysis</a>
+        <a href="{{ url_for('budget') }}">Monthly Budget</a>
+        <a href="{{ url_for('transactions') }}">Transaction History</a>
+    </nav>
+
+    <div class="panel">
+        <h2>All Transactions</h2>
+
+        {% if transactions %}
+        <div class="table-box">
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Date</th>
+                    <th>Type</th>
+                    <th>Category</th>
+                    <th>Amount (₹)</th>
+                    <th>Description</th>
+                </tr>
+                {% for t in transactions %}
+                <tr>
+                    <td>{{ t.transaction_id }}</td>
+                    <td>{{ t.transaction_date }}</td>
+                    <td>{{ t.transaction_type }}</td>
+                    <td>{{ t.category_name }}</td>
+                    <td>{{ "%.2f"|format(t.amount|float) }}</td>
+                    <td>{{ t.description or "" }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        {% else %}
+        <p>No transactions found.</p>
+        {% endif %}
+    </div>
+</div>
+</body>
+</html>
